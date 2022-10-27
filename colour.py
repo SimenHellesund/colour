@@ -14,7 +14,7 @@ fg_map = {
     "w": "97"}
 
 bg_map = {
-    "k": "100",
+    "k": "",
     "r": "101",
     "g": "102",
     "y": "103",
@@ -41,6 +41,8 @@ def colour(string, fg="k", bg="r", bold="0"):
     (str) bg -- background colour
     (str) bold -- bold text
     """
+    if string == None:
+        string = "None"
 
     if fg in fg_map.keys():
         pass
