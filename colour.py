@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import platform
+
 """ A simple module for printing coloured strings  in Python"""
 
 fg_map = {
@@ -27,14 +29,14 @@ colour_map = {"black": "k", "bck": "k", "bla": "k", "bk": "k",
               "red": "r", "rd": "r",
               "green": "g", "grn": "g", "gre": "g", "gn": "g",
               "yellow": "y", "ylo": "y", "yel": "y", "yl": "y", "yo": "y",
-              "blue": "b", "blu": "b", "bu": "b", 
-              "purple": "p", "prp": "p", "ppl": "p", "pur": "p", "pl": "p", 
+              "blue": "b", "blu": "b", "bu": "b",
+              "purple": "p", "prp": "p", "ppl": "p", "pur": "p", "pl": "p",
               "cyan": "c", "cyn": "c", "can": "c", "cn": "c", "cy": "c",
               "white": "w", "wht": "w", "whi": "w", "wte": "w", "wh": "w", "wi": "w", "wt": "w"}
 
 
 def colour(string, fg="k", bg="r", bold="0"):
-    """ Decorates the input string with text and background colour 
+    """ Decorates the input string with text and background colour
 
     keyword arguments:
     (str) fg -- text colour
@@ -49,28 +51,34 @@ def colour(string, fg="k", bg="r", bold="0"):
         fg = colour_map(fg)
     else:
         raise ValueError("invalid foreground value fg")
-    
+
     if bg in bg_map.keys():
         pass
     elif bg in colour_map.keys():
         bg = colour_map(bg)
     else:
         raise ValueError("invalid background value bg")
-    
+
     if type(bold) == "str" and bold == "1" or bold == "0":
         pass
     elif type(bold) == bool:
         bold = str(int(bold))
     elif type(bold) == int:
         bold = str(bold)
-       
-    outstr = "\33[{};{};{}m".format(bold, fg_map[fg], bg_map[bg]) + string + "\33[m"
+
+    escape = ""
+    os = platform.system()
+    if os in ["Linux", "Darwin"]:
+        escape= "\33"
+    elif os == "Windows":
+        escape = "^"
+    else:
+        raise NotImplementedError(
+            "{os} operating system not supported".format(os))
+
+    outstr = ("{}[{};{};{}m".format(escape, bold, fg_map[fg], bg_map[bg])
+              + string + "{}[m".format(escape))
     return outstr
 
 if __name__ == '__main__':
     pass
-
-
-
-
-    
