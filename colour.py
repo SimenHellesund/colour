@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import platform
+import os
 
 """ A simple module for printing coloured strings  in Python"""
 
@@ -66,12 +67,14 @@ def colour(string, fg="k", bg="r", bold="0"):
     elif type(bold) == int:
         bold = str(bold)
 
+    #Escape characters are different on unix and windows
     escape = ""
-    os = platform.system()
-    if os in ["Linux", "Darwin"]:
+    OS = platform.system()
+    if OS in ["Linux", "Darwin"]:
         escape= "\33"
-    elif os == "Windows":
-        escape = "^"
+    elif OS == "Windows":
+        os.system("color")
+        escape = "\x1b"
     else:
         raise NotImplementedError(
             "{os} operating system not supported".format(os))
@@ -82,3 +85,4 @@ def colour(string, fg="k", bg="r", bold="0"):
 
 if __name__ == '__main__':
     pass
+
