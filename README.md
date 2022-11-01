@@ -1,6 +1,8 @@
 # Colour
 A simple function for decorating strings with colour in python.
 
+Works in Linux and Mac terminals, and has been tested for Windows 10 command prompt.
+
 ## Install
 No installation needed, just check out the repository  
 'git clone git@github.com:SimenHellesund/colour.git'
